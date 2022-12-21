@@ -30,7 +30,7 @@ const services = {
 const servicesLabels = {
   github: 'GitHub',
   google: 'Google',
-  azure: 'Azure'
+  azure: 'thws'
 };
 
 const StyledButton = styled(Button)`

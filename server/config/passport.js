@@ -23,7 +23,8 @@ function generateUniqueUsername(username) {
 }
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  // done(null, user.id);
+  done(null, user.oid);
 });
 
 passport.deserializeUser((id, done) => {
@@ -319,7 +320,7 @@ passport.use(
       allowHttpForRedirectUrl: false,
       clientSecret: process.env.AZURE_APP_SECRET,
       passReqToCallback: true,
-      scope: ['email', 'profile', 'openid']
+      scope: ['openid', 'email', 'profile']
     },
     (req, iss, sub, profile, accessToken, refreshToken, done) => {
       User.findOne({ azure: profile.oid }, (findByAzureErr, existingUser) => {
