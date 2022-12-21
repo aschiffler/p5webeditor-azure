@@ -22,16 +22,14 @@ function generateUniqueUsername(username) {
   return slugify(`${username} ${adj}`);
 }
 
-passport.serializeUser((user, done) => {
-  // done(null, user.id);
-  done(null, user.oid);
+passport.serializeUser(function(user, done) {
+  done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
+passport.deserializeUser(function(user, done) {
+  done(null, user);
 });
+
 
 /**
  * Sign in using Email/Username and Password.
