@@ -1,0 +1,5 @@
+{
+	"name": "Node.js",
+	"image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:16"
+	"remoteUser": "node"
+}
