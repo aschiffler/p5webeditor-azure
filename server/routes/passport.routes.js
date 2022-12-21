@@ -49,4 +49,27 @@ router.get('/auth/google/callback', (req, res, next) => {
   )(req, res, next);
 });
 
+router.get('/auth/azure', passport.authenticate('azuread-openidconnect'));
+router.get('/auth/azure/callback', (req, res, next) => {
+  passport.authenticate(
+    'azuread-openidconnect',
+    { failureRedirect: '/login' },
+    (err, user) => {
+      if (err) {
+        // use query string param to show error;
+        res.redirect('/account?error=azure');
+        return;
+      }
+
+      req.logIn(user, (loginErr) => {
+        if (loginErr) {
+          next(loginErr);
+          return;
+        }
+        res.redirect('/');
+      });
+    }
+  )(req, res, next);
+});
+
 export default router;

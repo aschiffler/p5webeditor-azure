@@ -25,6 +25,7 @@ function SignupView() {
           <div className="form-container__stack">
             <SocialAuthButton service={SocialAuthButton.services.github} />
             <SocialAuthButton service={SocialAuthButton.services.google} />
+            <SocialAuthButton service={SocialAuthButton.services.azure} />
           </div>
           <p className="form__navigation-options">
             By signing up, you agree to the p5.js Editor&apos;s{' '}

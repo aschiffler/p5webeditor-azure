@@ -325,7 +325,7 @@ export function removeApiKey(keyId) {
 
 export function unlinkService(service) {
   return (dispatch) => {
-    if (!['github', 'google'].includes(service)) return;
+    if (!['github', 'google', 'azure'].includes(service)) return;
     apiClient
       .delete(`/auth/${service}`)
       .then((response) => {

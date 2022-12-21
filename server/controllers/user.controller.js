@@ -16,6 +16,7 @@ export function userResponse(user) {
     verified: user.verified,
     id: user._id,
     totalSize: user.totalSize,
+    azure: user.azure,
     github: user.github,
     google: user.google,
     cookieConsent: user.cookieConsent
@@ -428,5 +429,18 @@ export function updateCookieConsent(req, res) {
     const { cookieConsent } = req.body;
     user.cookieConsent = cookieConsent;
     saveUser(res, user);
+  });
+}
+
+export function unlinkAzure(req, res) {
+  if (req.user) {
+    req.user.azure = undefined;
+    req.user.tokens = req.user.tokens.filter((token) => token.kind !== 'azure');
+    saveUser(res, req.user);
+    return;
+  }
+  res.status(404).json({
+    success: false,
+    message: 'You must be logged in to complete this action.'
   });
 }

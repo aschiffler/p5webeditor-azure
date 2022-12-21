@@ -55,6 +55,7 @@ const userSchema = new Schema(
     verified: { type: String },
     verifiedToken: String,
     verifiedTokenExpires: Date,
+    azure: { type: String },
     github: { type: String },
     google: { type: String },
     email: { type: String, unique: true },

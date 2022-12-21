@@ -38,5 +38,6 @@ router.get('/verify', UserController.verifyEmail);
 
 router.delete('/auth/github', UserController.unlinkGithub);
 router.delete('/auth/google', UserController.unlinkGoogle);
+router.delete('/auth/azure', UserController.unlinkAzure);
 
 export default router;

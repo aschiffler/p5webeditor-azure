@@ -23,6 +23,7 @@ function LoginView() {
           <div className="form-container__stack">
             <SocialAuthButton service={SocialAuthButton.services.github} />
             <SocialAuthButton service={SocialAuthButton.services.google} />
+            <SocialAuthButton service={SocialAuthButton.services.azure} />
           </div>
           <p className="form__navigation-options">
             {t('LoginView.DontHaveAccount')}

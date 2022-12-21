@@ -39,6 +39,11 @@ function SocialLoginPanel(props) {
           linkStyle
           isConnected={!!user.google}
         />
+        <SocialAuthButton
+          service={SocialAuthButton.services.azure}
+          linkStyle
+          isConnected={!!user.azure}
+        />
       </div>
     </React.Fragment>
   );
@@ -47,7 +52,8 @@ function SocialLoginPanel(props) {
 SocialLoginPanel.propTypes = {
   user: PropTypes.shape({
     github: PropTypes.string,
-    google: PropTypes.string
+    google: PropTypes.string,
+    azure: PropTypes.string
   }).isRequired,
   t: PropTypes.func.isRequired
 };

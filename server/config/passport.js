@@ -6,6 +6,7 @@ import passport from 'passport';
 import GitHubStrategy from 'passport-github2';
 import LocalStrategy from 'passport-local';
 import GoogleStrategy from 'passport-google-oauth20';
+import { OIDCStrategy } from 'passport-azure-ad';
 import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
@@ -300,6 +301,90 @@ passport.use(
           }
         }
       );
+    }
+  )
+);
+
+/**
+ * Sign in with Azure.
+ */
+passport.use(
+  new OIDCStrategy(
+    {
+      identityMetadata: process.env.AZURE_META,
+      clientID: process.env.AZURE_APP_ID,
+      responseType: 'code',
+      responseMode: 'query',
+      redirectUrl: process.env.AZURE_CALLBACK,
+      allowHttpForRedirectUrl: false,
+      clientSecret: process.env.AZURE_APP_SECRET,
+      passReqToCallback: true,
+      scope: ['email', 'profile', 'openid']
+    },
+    (req, iss, sub, profile, accessToken, refreshToken, done) => {
+      User.findOne({ azure: profile.oid }, (findByAzureErr, existingUser) => {
+        if (existingUser) {
+          if (req.user && req.user.email !== existingUser.email) {
+            done(
+              new Error('Azure account is already linked to another account.')
+            );
+            return;
+          }
+          done(null, existingUser);
+          return;
+        }
+
+        const primaryEmail = profile.emails;
+
+        if (req.user) {
+          if (!req.user.azure) {
+            req.user.azure = profile.oid;
+            req.user.tokens.push({ kind: 'azure', accessToken });
+            req.user.verified = User.EmailConfirmation.Verified;
+          }
+          req.user.save((saveErr) => done(null, req.user));
+        } else {
+          User.findByEmail(
+            primaryEmail,
+            (findByEmailErr, existingEmailUser) => {
+              if (existingEmailUser) {
+                existingEmailUser.email =
+                  existingEmailUser.email || primaryEmail;
+                existingEmailUser.azure = profile.oid;
+                existingEmailUser.username =
+                  existingEmailUser.username ||
+                  profile._json.preferred_username;
+                existingEmailUser.tokens.push({ kind: 'azure', accessToken });
+                existingEmailUser.name =
+                  existingEmailUser.name || profile.displayName;
+                existingEmailUser.verified = User.EmailConfirmation.Verified;
+                existingEmailUser.save((saveErr) =>
+                  done(null, existingEmailUser)
+                );
+              } else {
+                let { username } = profile.oid;
+                User.findByUsername(
+                  username,
+                  { caseInsensitive: true },
+                  (findByUsernameErr, existingUsernameUser) => {
+                    if (existingUsernameUser) {
+                      username = generateUniqueUsername(username);
+                    }
+                    const user = new User();
+                    user.email = primaryEmail;
+                    user.azure = profile.oid;
+                    user.username = profile.oid;
+                    user.tokens.push({ kind: 'azure', accessToken });
+                    user.name = profile.displayName;
+                    user.verified = User.EmailConfirmation.Verified;
+                    user.save((saveErr) => done(null, user));
+                  }
+                );
+              }
+            }
+          );
+        }
+      });
     }
   )
 );
