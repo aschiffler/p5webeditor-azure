@@ -4,7 +4,7 @@ import { handleCreateFile } from './files';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
 const s3BucketHttps =
-  getConfig('S3_BUCKET_URL_BASE') ||
+  process.env.S3_BUCKET_URL_BASE ||
   `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
     'S3_BUCKET'
   )}/`;

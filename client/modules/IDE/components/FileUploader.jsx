@@ -9,7 +9,7 @@ import getConfig from '../../../utils/getConfig';
 import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
 
 const s3Bucket =
-  getConfig('S3_BUCKET_URL_BASE') ||
+  process.env.S3_BUCKET_URL_BASE ||
   `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
     'S3_BUCKET'
   )}/`;

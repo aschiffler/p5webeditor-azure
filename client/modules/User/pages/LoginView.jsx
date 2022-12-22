@@ -21,8 +21,6 @@ function LoginView() {
           <LoginForm />
           <h2 className="form-container__divider">{t('LoginView.LoginOr')}</h2>
           <div className="form-container__stack">
-            <SocialAuthButton service={SocialAuthButton.services.github} />
-            <SocialAuthButton service={SocialAuthButton.services.google} />
             <SocialAuthButton service={SocialAuthButton.services.azure} />
           </div>
           <p className="form__navigation-options">

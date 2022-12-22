@@ -23,8 +23,6 @@ function SignupView() {
           <SignupForm />
           <h2 className="form-container__divider">{t('SignupView.Or')}</h2>
           <div className="form-container__stack">
-            <SocialAuthButton service={SocialAuthButton.services.github} />
-            <SocialAuthButton service={SocialAuthButton.services.google} />
             <SocialAuthButton service={SocialAuthButton.services.azure} />
           </div>
           <p className="form__navigation-options">

@@ -30,16 +30,6 @@ function SocialLoginPanel(props) {
       </p>
       <div className="account__social-stack">
         <SocialAuthButton
-          service={SocialAuthButton.services.github}
-          linkStyle
-          isConnected={!!user.github}
-        />
-        <SocialAuthButton
-          service={SocialAuthButton.services.google}
-          linkStyle
-          isConnected={!!user.google}
-        />
-        <SocialAuthButton
           service={SocialAuthButton.services.azure}
           linkStyle
           isConnected={!!user.azure}
