@@ -13,11 +13,11 @@ const client = s3.createClient({
   s3RetryDelay: 1000,
   multipartUploadThreshold: 20971520, // this is the default (20 MB)
   multipartUploadSize: 15728640, // this is the default (15 MB)
-  endpoint: `${process.env.S3_BUCKET_CUSTOM_ENDPOINT}`,
   s3Options: {
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
     region: `${process.env.AWS_REGION}`,
+    endpoint: `${process.env.S3_BUCKET_CUSTOM_ENDPOINT}`,
     s3BucketEndpoint: true
   }
 });
