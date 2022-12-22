@@ -25,7 +25,8 @@ let client = s3.createClient({
   s3Options: {
     accessKeyId: `${process.env.AWS_ACCESS_KEY}`,
     secretAccessKey: `${process.env.AWS_SECRET_KEY}`,
-    region: `${process.env.AWS_REGION}`
+    region: `${process.env.AWS_REGION}`,
+    s3BucketEndpoint: true    
   },
 });
 
