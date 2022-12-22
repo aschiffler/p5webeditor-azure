@@ -8,11 +8,7 @@ import * as UploaderActions from '../actions/uploader';
 import getConfig from '../../../utils/getConfig';
 import { fileExtensionsAndMimeTypes } from '../../../../server/utils/fileUtils';
 
-const s3Bucket =
-  process.env.S3_BUCKET_URL_BASE ||
-  `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
-    'S3_BUCKET'
-  )}/`;
+const s3Bucket = process.env.S3_BUCKET_URL_BASE;
 
 class FileUploader extends React.Component {
   componentDidMount() {

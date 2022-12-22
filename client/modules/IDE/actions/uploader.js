@@ -3,11 +3,7 @@ import getConfig from '../../../utils/getConfig';
 import { handleCreateFile } from './files';
 import { TEXT_FILE_REGEX } from '../../../../server/utils/fileUtils';
 
-const s3BucketHttps =
-  process.env.S3_BUCKET_URL_BASE ||
-  `https://s3-${getConfig('AWS_REGION')}.amazonaws.com/${getConfig(
-    'S3_BUCKET'
-  )}/`;
+const s3BucketHttps =  process.env.S3_BUCKET_URL_BASE;
 const MAX_LOCAL_FILE_SIZE = 80000; // bytes, aka 80 KB
 
 function localIntercept(file, options = {}) {

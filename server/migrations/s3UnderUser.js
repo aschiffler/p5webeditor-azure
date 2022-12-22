@@ -57,16 +57,14 @@ Project.count({}).exec().then((numProjects) => {
                 client.moveObject(params)
                 .on('error', (err) => {
                   console.log(err);
-                  file.url = (process.env.S3_BUCKET_URL_BASE ||
-                              `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
+                  file.url = (process.env.S3_BUCKET_URL_BASE) + `/${userId}/${key}`;
                   project.save((err, savedProject) => {
                     console.log(`updated file ${key}`);
                     fileCb();
                   });
                 })
                 .on('end', () => {
-                  file.url = (process.env.S3_BUCKET_URL_BASE ||
-                              `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}`) + `/${userId}/${key}`;
+                  file.url = (process.env.S3_BUCKET_URL_BASE) + `/${userId}/${key}`;
                   project.save((err, savedProject) => {
                     console.log(`updated file ${key}`);
                     fileCb();

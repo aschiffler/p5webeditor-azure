@@ -20,9 +20,7 @@ const client = s3.createClient({
   }
 });
 
-const s3Bucket =
-  process.env.S3_BUCKET_URL_BASE ||
-  `https://s3-${process.env.AWS_REGION}.amazonaws.com/${process.env.S3_BUCKET}/`;
+const s3Bucket = process.env.S3_BUCKET_URL_BASE;
 
 function getExtension(filename) {
   const i = filename.lastIndexOf('.');
